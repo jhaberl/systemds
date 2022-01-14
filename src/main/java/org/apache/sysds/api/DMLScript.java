@@ -219,7 +219,7 @@ public class DMLScript
 			STATISTICS_COUNT      = dmlOptions.statsCount;
 			FED_STATISTICS        = dmlOptions.fedStats;
 			FED_STATISTICS_COUNT  = dmlOptions.fedStatsCount;
-			JMLC_MEM_STATISTICS   = dmlOptions.memStats;
+			JMLC_MEM_STATISTICS   = true;
 			USE_ACCELERATOR       = dmlOptions.gpu;
 			FORCE_ACCELERATOR     = dmlOptions.forceGPU;
 			EXPLAIN               = dmlOptions.explainType;

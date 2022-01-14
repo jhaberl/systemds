@@ -1,0 +1,24 @@
+#test = function (matrix[double] X, int count) return (double m) {
+    #m = sum(X) / nrow(X)
+    #if (count < 1) {
+        #y = test(X, count + 1)
+        #print(toString(y))
+    #}
+#}
+
+#A = rand(rows=10, cols=10)
+#B = test(A, 0)
+#print(toString(B))
+
+totalResult = matrix(0, rows=1000, cols=1)
+for (i in 1:100) {
+    A = rand(rows=1000, cols=1000)
+    b = rand(rows=1000, cols=1000)
+    C = rand(rows=1000, cols=1000)
+    d = rand(rows=1000, cols=1000)
+    result = (A + b) %*% (rowMaxs(C + d))
+    totalResult = totalResult + result
+}
+
+print(toString(totalResult))
+print(toString(totalResult * 2))

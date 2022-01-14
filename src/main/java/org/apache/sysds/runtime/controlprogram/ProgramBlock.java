@@ -18,6 +18,10 @@
  */
 package org.apache.sysds.runtime.controlprogram;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
@@ -238,6 +242,19 @@ public abstract class ProgramBlock implements ParseInfo {
 		return ret;
 	}
 
+	private WeakReference<Object> temp;
+	private PrintWriter pw;
+
+	{
+		try {
+			pw = new PrintWriter("memory_consumption.log");
+			pw.println("mem");
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void executeSingleInstruction(Instruction currInst, ExecutionContext ec) {
 		try {
 			// start time measurement for statistics
@@ -281,6 +298,11 @@ public abstract class ProgramBlock implements ParseInfo {
 				checkSparsity(tmp, ec.getVariables(), ec);
 				checkFederated(ec.getVariables());
 			}
+
+			// TODO: Remove
+			temp = new WeakReference<>(new Object());
+			while (temp.get() != null) System.gc();
+			pw.println(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
 		}
 		catch(DMLScriptException e) {
 			throw e;
